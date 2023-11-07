@@ -1,0 +1,166 @@
+import java.util.Scanner;
+
+// Main class containing the menu-driven program
+public class TestQueueNode {
+    public static void main(String[] args) {
+        // Creating a new queue object
+        QueueOperations queue = new QueueOperations();
+        // Creating a Scanner object for user input
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Menu:");
+            System.out.println("1. Enqueue");
+            System.out.println("2. Dequeue");
+            System.out.println("3. Display Queue");
+            System.out.println("4. Front Element");
+            System.out.println("5. Rear Element");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice: ");
+
+            // Reading user choice
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    // Enqueue operation
+                    System.out.print("Enter the element to enqueue: ");
+                    int element = scanner.nextInt();
+                    queue.enqueue(element);
+                    System.out.println(element + " enqueued to the queue.");
+                    break;
+                case 2:
+                    // Dequeue operation
+                    int removedElement = queue.dequeue();
+                    if (removedElement != -1) {
+                        System.out.println(removedElement + " dequeued from the queue.");
+                    }
+                    break;
+                case 3:
+                    // Display queue operation
+                    System.out.print("Queue: ");
+                    queue.displayQueue();
+                    break;
+                case 4:
+                    // Front element operation
+                    int frontElement = queue.front();
+                    if (frontElement != -1) {
+                        System.out.println("Front element: " + frontElement);
+                    }
+                    break;
+                case 5:
+                    // Rear element operation
+                    int rearElement = queue.rear();
+                    if (rearElement != -1) {
+                        System.out.println("Rear element: " + rearElement);
+                    }
+                    break;
+                case 6:
+                    // Exit the program
+                    System.out.println("Exiting the program.");
+                    System.exit(0);
+                    break;
+                default:
+                    // Invalid choice
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
+            }
+        }
+    }
+}
+___________________________________________________END____________________________________________________
+
+// Class representing a node in the queue
+
+class QueueNode {
+    QueueNode previous;
+    int info;
+    QueueNode next;
+
+    // Default constructor
+    public QueueNode() {
+        this.previous = null;
+        this.info = 0;
+        this.next = null;
+    }
+
+    // Parameterized constructor
+    public QueueNode(QueueNode previous, int info, QueueNode next) {
+        this.previous = previous;
+        this.info = info;
+        this.next = next;
+    }
+}
+
+_________________________________________________END_________________________________________________________
+// Class representing queue operations
+class QueueOperations {
+    private QueueNode front;
+    private QueueNode rear;
+
+    // Constructor to initialize front and rear
+    public QueueOperations() {
+        this.front = null;
+        this.rear = null;
+    }
+
+    // Method to enqueue an element into the queue
+    public void enqueue(int info) {
+        QueueNode newNode = new QueueNode(null, info, null);
+        if (front == null) {
+            front = newNode;
+            rear = newNode;
+        } else {
+            newNode.previous = rear;
+            rear.next = newNode;
+            rear = newNode;
+        }
+    }
+
+    // Method to dequeue an element from the queue
+    public int dequeue() {
+        if (front == null) {
+            System.out.println("Queue is empty.");
+            return -1;
+        } else {
+            int removedInfo = front.info;
+            if (front == rear) {
+                front = null;
+                rear = null;
+            } else {
+                front = front.next;
+                front.previous = null;
+            }
+            return removedInfo;
+        }
+    }
+
+    // Method to display the elements of the queue
+    public void displayQueue() {
+        QueueNode current = front;
+        while (current != null) {
+            System.out.print(current.info + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+
+    // Method to get the front element of the queue
+    public int front() {
+        if (front == null) {
+            System.out.println("Queue is empty.");
+            return -1;
+        }
+        return front.info;
+    }
+
+    // Method to get the rear element of the queue
+    public int rear() {
+        if (rear == null) {
+            System.out.println("Queue is empty.");
+            return -1;
+        }
+        return rear.info;
+    }
+}
+
