@@ -1,0 +1,135 @@
+import java.util.Scanner;
+    public class TestQueueArray{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter queue size: ");
+        int size = scanner.nextInt();
+        QueueArray queue = new QueueArray(size);
+
+        while (true) {
+            System.out.println("       MENU");
+            System.out.println("===================");
+            System.out.println("[1] - isEmpty");
+            System.out.println("[2] - Print Elements ");
+            System.out.println("[3] - Enqueue");
+            System.out.println("[4] - Dequeue");
+            System.out.println("[5] - Print Rear");
+            System.out.println("[6] - Print Front");
+            System.out.println("[7] - Exit Program");
+            System.out.println("____________________");
+            System.out.println("Enter choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("Queue is empty " + queue.isEmpty());
+                    break;
+                case 2:
+                    queue.print();
+                    break;
+                case 3:
+                    System.out.print("Enter value to enqueue: ");
+                    int valueToEnqueue = scanner.nextInt();
+                    queue.enqueue(valueToEnqueue);
+                    break;
+                case 4:
+                    queue.dequeue();
+                    break;
+                case 5:
+                    queue.rear();
+                    break;
+                case 6:
+                    queue.front();
+                    break;
+                case 7:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+}
+___________________________END OF MAIN________________________________________________
+
+___________________________START______________________________________________________
+public class QueueArray {
+    private int maxSize;
+    private int rear;
+    private int front;
+    private int[] queue;
+
+    public QueueArray(int size) {
+        maxSize = size;
+        queue = new int[maxSize];
+        rear = -1;
+        front = 0;
+    }
+
+    // checks if the queue is empty
+    public boolean isEmpty() {
+        return rear == -1;
+    }
+
+    // checks if the queue is empty
+    public boolean isFull() {
+        return rear == maxSize - 1;
+    }
+
+    // enqueue an element
+    public void enqueue(int value) {
+        if (isFull()) {
+            System.out.println("Queue is full. Cannot push.");
+        } else {
+            queue[++rear] = value;
+            System.out.println(value + " Enqueued.");
+        }
+    }
+
+    // dequeue
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty. Cannot dequeue.");
+            return -1; // Return a sentinel value to indicate failure
+        } else {
+            int value = queue[front++];
+            System.out.println(value + " Dequeued from the queue.");
+            return value;
+        }
+    }
+
+    // rear
+    public int rear() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return -1; // Return a sentinel value to indicate failure
+        } else {
+            System.out.println("Rear element: " + queue[rear]);
+            return queue[rear];
+        }
+    }
+
+    // front
+    public int front() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+            return -1; // Return a sentinel value to indicate failure
+        } else {
+            System.out.println("Front element: " + queue[front]);
+            return queue[front];
+        }
+    }
+
+    public void print() {
+        if (isEmpty()) {
+            System.out.println("Queue is empty.");
+        } else {
+            System.out.println("Queue:");
+            for (int i = front; i <= rear; i++) {
+                System.out.println(queue[i]);
+            }
+        }
+    }
+    }
+    
