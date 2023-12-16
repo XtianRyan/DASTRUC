@@ -1,0 +1,68 @@
+// ... (previous code)
+
+private static void createTransactionPanel() {
+    JPanel transactionPanel = new JPanel(new GridLayout(4, 2, 10, 10));
+    transactionPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+    Font labelFont = new Font("Arial", Font.BOLD, 14);
+
+    JLabel transactionIdLabel = new JLabel("Transaction ID:");
+    transactionIdLabel.setFont(labelFont);
+    JTextField transactionIdField = new JTextField();
+    JLabel customerIdLabel = new JLabel("Customer ID:");
+    customerIdLabel.setFont(labelFont);
+    JTextField customerIdField = new JTextField();
+    JLabel totalPriceLabel = new JLabel("Total Price:");
+    totalPriceLabel.setFont(labelFont);
+    JTextField totalPriceField = new JTextField();
+    JButton processTransactionButton = new JButton("Process Transaction");
+    JButton goBackButton = new JButton("Go Back");
+
+    processTransactionButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String transactionId = transactionIdField.getText().trim();
+            String customerId = customerIdField.getText().trim();
+            String totalPrice = totalPriceField.getText().trim();
+
+            if (transactionId.isEmpty() || customerId.isEmpty() || totalPrice.isEmpty()) {
+                JOptionPane.showMessageDialog(mainFrame, "Please fill in all transaction fields.");
+                return;
+            }
+
+            // Perform the transaction logic here, e.g., update database, generate receipt, etc.
+
+            JOptionPane.showMessageDialog(mainFrame, "Transaction completed successfully!");
+        }
+    });
+
+    goBackButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            cardLayout.show(mainPanel, "ProductPanel");
+        }
+    });
+
+    transactionPanel.add(transactionIdLabel);
+    transactionPanel.add(transactionIdField);
+    transactionPanel.add(customerIdLabel);
+    transactionPanel.add(customerIdField);
+    transactionPanel.add(totalPriceLabel);
+    transactionPanel.add(totalPriceField);
+    transactionPanel.add(goBackButton);
+    transactionPanel.add(processTransactionButton);
+
+    mainPanel.add(transactionPanel, "Transaction");
+}
+
+// ... (previous code)
+
+private static void createProductPanel() {
+    // ... (previous code)
+
+    // Add transaction panel to main panel
+    createTransactionPanel();
+
+    // ... (remaining previous code)
+}
+
+// ... (remaining previous code)
