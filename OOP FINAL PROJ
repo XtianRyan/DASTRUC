@@ -25,7 +25,7 @@ public class LoginSystemGUI {
     }
 
     private static void createAndShowGUI() {
-        mainFrame = new JFrame("Login System");
+        mainFrame = new JFrame("Sari-Sari Store");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainPanel = new JPanel();
         cardLayout = new CardLayout();
@@ -95,19 +95,20 @@ public class LoginSystemGUI {
     JLabel transactionIdLabel = new JLabel("Transaction ID:");
     transactionIdLabel.setFont(labelFont);
     JTextField transactionIdField = new JTextField();
-    JLabel customerIdLabel = new JLabel("Customer ID:");
+    JLabel customerIdLabel = new JLabel("Customer Name:");
     customerIdLabel.setFont(labelFont);
     JTextField customerIdField = new JTextField();
     JLabel totalPriceLabel = new JLabel("Total Price:");
     totalPriceLabel.setFont(labelFont);
     JTextField totalPriceField = new JTextField();
+    totalPriceField.setEditable(false);
+    
     JButton processTransactionButton = new JButton("Process Transaction");
 
     JTextArea selectedProductsTextArea = new JTextArea();
     selectedProductsTextArea.setEditable(false);
     JScrollPane selectedProductsScrollPane = new JScrollPane(selectedProductsTextArea);
     selectedProductsScrollPane.setPreferredSize(new Dimension(250, 200));
-    JButton addMoreProductsButton = new JButton("Add More Products");
     JButton resetTransactionButton = new JButton("Reset Transaction");
     JButton goBackButton = new JButton("Go Back");
 
@@ -116,13 +117,6 @@ public class LoginSystemGUI {
         public void actionPerformed(ActionEvent e) {
             cardLayout.show(mainPanel, "ProductPanel");
             isNewTransaction = true; // Set isNewTransaction to true when going back
-        }
-    });
-
-    addMoreProductsButton.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            cardLayout.show(mainPanel, "ProductPanel"); // Navigate back to the product panel
         }
     });
 
@@ -168,7 +162,6 @@ public class LoginSystemGUI {
     transactionPanel.add(goBackButton);
     transactionPanel.add(processTransactionButton);
     transactionPanel.add(selectedProductsScrollPane, BorderLayout.CENTER);
-    transactionPanel.add(addMoreProductsButton, BorderLayout.WEST);
     transactionPanel.add(resetTransactionButton, BorderLayout.EAST);
 
     mainPanel.add(transactionPanel, "Transaction");
@@ -345,7 +338,24 @@ public class LoginSystemGUI {
     
 
     mainPanel.add(productPanel, "ProductPanel");
+    
+    JButton goBackToTransactionButton = new JButton("Go Back to Transaction");
+    
+    goBackToTransactionButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            cardLayout.show(mainPanel, "Transaction");
+            isNewTransaction = true; // Set isNewTransaction to true for a new transaction
+            clearTransactionFields(); // Clear transaction-related fields
+        }
+    });
+
+    inputPanel.add(new JLabel());
+    inputPanel.add(goBackToTransactionButton);
+    
+    
 }    
+
     // Create this method outside of the existing methods
 private static void clearTransactionFields() {
     // Clear transaction-related fields
